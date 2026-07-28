@@ -1,4 +1,4 @@
-// AlphaDesk V7 — folio-agent-v1 embedded benchmark dataset (spec §22-23).
+// AlphaDesk V7 — alphadesk-agent-v1 embedded benchmark dataset (spec §22-23).
 //
 // Hand-authored benchmark cases for the AlphaDesk research agent. Quality over
 // quantity: every case encodes a realistic user request against the twenty
@@ -33,8 +33,8 @@ const onlyLongbridge: Pick<EvaluationExpectations, 'allowedProviders'> = {
   allowedProviders: ['longbridge'],
 };
 
-export const folioAgentV1Dataset = {
-  id: 'folio-agent-v1',
+export const alphaDeskAgentV1Dataset = {
+  id: 'alphadesk-agent-v1',
   version: '1.0.0',
   name: 'AlphaDesk Agent Benchmark v1',
   description:

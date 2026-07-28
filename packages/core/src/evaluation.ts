@@ -102,7 +102,7 @@ export interface EvaluationCase {
 }
 
 export interface EvaluationDataset {
-  /** Stable id, e.g. "folio-agent-v1". */
+  /** Stable id, e.g. "alphadesk-agent-v1". */
   id: string;
   /** Semantic version; bump on any case change so experiments stay comparable (spec §25). */
   version: string;

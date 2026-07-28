@@ -242,7 +242,7 @@ function seedEvalStore() {
   const shape = {
     settings: {
       tracingEnabled: false,
-      langsmithProject: 'folio-agent',
+      langsmithProject: 'alphadesk-agent',
       langsmithEndpoint: '',
       privacyLevel: 'standard',
       onlineEvaluationEnabled: false,

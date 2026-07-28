@@ -357,7 +357,7 @@ export const EvaluationSettingsTab: React.FC = () => {
               className={fieldClass}
               value={project}
               onChange={(e) => setProject(e.target.value)}
-              placeholder="folio-agent"
+              placeholder="alphadesk-agent"
               spellCheck={false}
             />
           </label>

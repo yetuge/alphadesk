@@ -97,7 +97,7 @@ AlphaDesk is local-first: sessions, credentials, and research state stay on the 
 - An integrated Evaluation Center for experiments, baselines, model comparisons, failure modes, case details, and human feedback.
 - Coverage includes task completion, tool selection and arguments, evidence/provenance, latency, failure recovery, research completeness, and decision usefulness.
 - Supports local offline evaluation and optional LangSmith tracing; tracing is off by default, with privacy level and API-key controls in Settings.
-- The `folio-agent-v1` benchmark contains 86 golden, difficult, long-tail, tool-failure, regression, and adversarial cases; fixed bugs become regression gates.
+- The `alphadesk-agent-v1` benchmark contains 86 golden, difficult, long-tail, tool-failure, regression, and adversarial cases; fixed bugs become regression gates.
 - Pull requests use a zero-cost deterministic smoke eval, while the full benchmark and model/strategy experiments run on demand or on a schedule.
 
 ### Skills & Capability Layer

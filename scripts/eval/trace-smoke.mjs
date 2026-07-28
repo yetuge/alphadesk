@@ -66,7 +66,7 @@ async function main() {
     env: {
       TRACE_TO_LANGSMITH: langsmithApiKey ? 'true' : 'false',
       ...(langsmithApiKey ? { LANGSMITH_PI_API_KEY: langsmithApiKey } : {}),
-      LANGSMITH_PI_PROJECT: process.env.LANGSMITH_PI_PROJECT ?? 'folio-agent',
+      LANGSMITH_PI_PROJECT: process.env.LANGSMITH_PI_PROJECT ?? 'alphadesk-agent',
       LANGSMITH_PI_METADATA: '{"app":"folio","purpose":"trace-smoke"}',
     },
     onLog: (log) => {

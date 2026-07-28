@@ -1,7 +1,7 @@
-// AlphaDesk V8 — folio-agent-v1-zh bilingual subset (spec §39–40).
+// AlphaDesk V8 — alphadesk-agent-v1-zh bilingual subset (spec §39–40).
 //
 // A small, high-value zh-CN subset of the embedded benchmark for i18n smoke
-// runs (spec §94). Cases mirror the en folio-agent-v1 structure (same tool /
+// runs (spec §94). Cases mirror the en alphadesk-agent-v1 structure (same tool /
 // capability expectations) but carry `locale: 'zh-CN'` (spec §37) and Chinese
 // prompts + judge hints. The Eval Runner drives the agent's response language
 // from the case locale, not the user's UI locale (spec §38).
@@ -20,12 +20,12 @@ const onlyLongbridge: Pick<EvaluationExpectations, 'allowedProviders'> = {
   allowedProviders: ['longbridge'],
 };
 
-export const folioAgentV1ZhDataset = {
-  id: 'folio-agent-v1-zh',
+export const alphaDeskAgentV1ZhDataset = {
+  id: 'alphadesk-agent-v1-zh',
   version: '1.0.0',
   name: 'AlphaDesk Agent 基准（中文子集）',
   description:
-    'folio-agent-v1 的高价值中文子集：报价、研究、工具选择、投资组合与提供方故障用例，prompt 为中文，locale 为 zh-CN，用于 i18n 冒烟评测。',
+    'alphadesk-agent-v1 的高价值中文子集：报价、研究、工具选择、投资组合与提供方故障用例，prompt 为中文，locale 为 zh-CN，用于 i18n 冒烟评测。',
   createdAt: Date.UTC(2026, 8, 1),
   cases: [
     // ── Basic Quote / Market (3) ─────────────────────────────────────────

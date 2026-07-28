@@ -74,8 +74,8 @@ default for gates.
 
 ## 6. Dataset versioning (spec §25)
 
-`folio-agent-v1` is immutable once experiments reference it. Fixes and new
-cases produce `folio-agent-v1.1` (or a new id). Baselines pin
+`alphadesk-agent-v1` is immutable once experiments reference it. Fixes and new
+cases produce `alphadesk-agent-v1.1` (or a new id). Baselines pin
 `datasetVersion`; comparisons across versions are not made.
 
 ## 7. Regression thresholds (spec §76–78)

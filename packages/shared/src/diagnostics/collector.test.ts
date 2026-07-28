@@ -47,10 +47,10 @@ function baseInput(): DiagnosticsInput {
       backend: 'none',
       tracingEnabled: false,
       privacyLevel: 'standard',
-      project: 'folio-agent',
+      project: 'alphadesk-agent',
       connected: null,
       traceStatus: 'disabled',
-      datasets: ['folio-agent-v1'],
+      datasets: ['alphadesk-agent-v1'],
     },
     pi: {
       status: 'running',

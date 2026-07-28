@@ -126,11 +126,11 @@ history stays comparable — spec §81).
 
 ## 7. Datasets & benchmark (spec §22–26)
 
-- `folio-agent-benchmark-v1`: 50–100 hand-authored high-quality cases
+- `alphadesk-agent-benchmark-v1`: 50–100 hand-authored high-quality cases
   (quality > quantity), categories: market, research, tool selection,
   tool arguments, grounded research, strategy/skill, provider failure,
   portfolio, compare, long-tail, adversarial.
-- Versioned: `folio-agent-v1` ≠ `folio-agent-v1.1`; changing a case requires a
+- Versioned: `alphadesk-agent-v1` ≠ `alphadesk-agent-v1.1`; changing a case requires a
   version bump so historical experiments stay comparable.
 - Difficulty tags: golden, difficult, long_tail, tool_failure, regression,
   adversarial. Fixed real bugs become regression cases (highest gate weight).
@@ -201,7 +201,7 @@ pi install npm:@langchain/langsmith-pi-extension
 # Configure via electron Settings → Evaluation, or env for the CLI:
 export LANGSMITH_PI_API_KEY=lsv2_…   # stored in safeStorage when set via UI
 export TRACE_TO_LANGSMITH=true
-export LANGSMITH_PI_PROJECT=folio-agent
+export LANGSMITH_PI_PROJECT=alphadesk-agent
 ```
 
 ## 16. Langfuse setup (Agent / Deep Research traces)

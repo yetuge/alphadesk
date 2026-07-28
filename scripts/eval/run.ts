@@ -98,7 +98,7 @@ const USAGE = `Usage:
   bun run eval:full  [flags]   # entire benchmark dataset
 
 Flags:
-  --dataset <id>          Embedded dataset id (default: folio-agent-v1)
+  --dataset <id>          Embedded dataset id (default: alphadesk-agent-v1)
   --mode fixture|live     Runtime mode (default: fixture)
   --model <id>            Agent model under test (e.g. anthropic/claude-sonnet-4-5;
                           a provider prefix is split off and applied via setModel)
@@ -135,7 +135,7 @@ ANTHROPIC_API_KEY or FINAGENT_PROVIDER_OVERRIDES (live agent), FINAGENT_PI_VERSI
 function parseFlags(argv: string[]): CliOptions {
   const options: CliOptions = {
     smoke: false,
-    dataset: 'folio-agent-v1',
+    dataset: 'alphadesk-agent-v1',
     mode: 'fixture',
     storeDir: join(homedir(), '.finagent', 'eval'),
     preflightOnly: false,
@@ -842,7 +842,7 @@ async function main(): Promise<number> {
         : resolveBackend(
             {
               tracingEnabled,
-              langsmithProject: process.env.LANGSMITH_PI_PROJECT ?? 'folio-agent',
+              langsmithProject: process.env.LANGSMITH_PI_PROJECT ?? 'alphadesk-agent',
               langsmithEndpoint: process.env.LANGSMITH_PI_ENDPOINT,
             },
             process.env.LANGSMITH_PI_API_KEY ?? process.env.LANGSMITH_API_KEY,
@@ -1074,7 +1074,7 @@ async function loadCommittedBaseline(id: string): Promise<EvaluationBaseline | u
     return {
       id,
       name: id,
-      datasetId: typeof parsed.datasetId === 'string' ? parsed.datasetId : 'folio-agent-v1',
+      datasetId: typeof parsed.datasetId === 'string' ? parsed.datasetId : 'alphadesk-agent-v1',
       datasetVersion: typeof parsed.datasetVersion === 'string' ? parsed.datasetVersion : '1.0.0',
       experimentId: id,
       gitSha: typeof parsed.gitSha === 'string' ? parsed.gitSha : '',
