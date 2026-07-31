@@ -29,4 +29,11 @@ describe('eval-nightly workflow (issue #113)', () => {
     expect(workflow).toContain('eval-full.json');
     expect(workflow).toContain('eval-full.log');
   });
+
+  it('skips cleanly when CI is not provisioned instead of failing red nightly', () => {
+    expect(workflow).toContain('id: provisioning');
+    expect(workflow).toContain('steps.provisioning.outputs.ready');
+    expect(workflow).toContain('ANTHROPIC_API_KEY');
+    expect(workflow).toContain('command -v longbridge');
+  });
 });

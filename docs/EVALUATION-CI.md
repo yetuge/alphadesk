@@ -48,13 +48,20 @@ dashboard and baseline promotion.
 
 - Triggers: `schedule` (daily `17 3 * * *` UTC) and `workflow_dispatch`
   (for release/manual experiments).
-- Steps: checkout → setup Bun → install → `bun run eval:full -- --mode live
-  --model <provider>/<id> --judge-provider anthropic --judge-model <id>
-  --out artifacts/eval-full.json`, with
+- Steps: checkout → setup Bun → install → **provisioning guard** → `bun run
+  eval:full -- --mode live --model <provider>/<id> --judge-provider anthropic
+  --judge-model <id> --out artifacts/eval-full.json`, with
   `LANGSMITH_PI_API_KEY`, `ANTHROPIC_API_KEY`, and `FINAGENT_JUDGE_API_KEY`
   passed through from repo secrets (never echoed, never logged). The model
   defaults to `anthropic/claude-sonnet-4-5` and can be overridden via the
   `FINAGENT_EVAL_MODEL` / `FINAGENT_JUDGE_MODEL` repository variables.
+- The **provisioning guard** runs before any eval work: if the
+  `ANTHROPIC_API_KEY` secret is absent or the LongBridge CLI is not on the
+  runner PATH, the live suite cannot measure anything, so the job skips
+  cleanly (green) and the step summary lists exactly what is missing. This is
+  not a swallowed failure — nothing ran, and nothing pretends to have run.
+  Once provisioned, the guard passes and real failures below still fail the
+  job.
 - Before any case runs, the CLI executes a **live preflight** (issue #113):
   Pi runtime health, model availability, a one-token credential probe, the
   LongBridge data source, and judge readiness. A missing install or credential
@@ -69,9 +76,11 @@ dashboard and baseline promotion.
   plus run log are uploaded (both on success and failure).
 
 Note: the runner does not currently install or authenticate the LongBridge
-CLI, so the preflight correctly reports `invalid` (exit 2) until the data
-source is provisioned in CI. That is the intended failure mode: no fake
-composite score, no green light on an unmeasurable suite.
+CLI and no model-credential secret is configured, so the provisioning guard
+skips the suite (green, with the missing items in the summary) until the
+credentials and data source are provisioned in CI. Once provisioned, an
+unready preflight is the intended failure mode: exit `2`, no fake composite
+score, no green light on an unmeasurable suite.
 
 ## Baselines & promotion
 

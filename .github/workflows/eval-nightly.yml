@@ -33,6 +33,34 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # The nightly is only a real signal once the runner is provisioned: the
+      # agent/judge credential secret and the LongBridge CLI (the live suite's
+      # market-data source). Until then an unconditional run fails red every
+      # night with zero signal, so skip cleanly instead — and say exactly what
+      # is missing. This does not swallow failures: once provisioned, the CLI
+      # preflight (issue #113) remains the authority and a real failure still
+      # fails the job.
+      - name: Check CI provisioning
+        id: provisioning
+        run: |
+          missing=()
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            missing+=('ANTHROPIC_API_KEY secret (agent model + judge credentials)')
+          fi
+          if ! command -v longbridge > /dev/null 2>&1; then
+            missing+=('LongBridge CLI on the runner PATH (market-data source)')
+          fi
+          if [ "${#missing[@]}" -eq 0 ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+            echo 'CI is provisioned — the live suite will run.'
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            printf 'missing=%s\n' "$(IFS='; '; echo "${missing[*]}")" >> "$GITHUB_OUTPUT"
+            echo "::notice::Eval Nightly skipped — CI is not provisioned: $(IFS='; '; echo "${missing[*]}")"
+          fi
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
       # Live eval with the Anthropic judge. Secrets are passed through env
       # only — never echoed, never written to logs. FINAGENT_JUDGE_API_KEY is
       # set from the same secret so either credential convention the CLI
@@ -48,9 +76,13 @@ jobs:
       # and judge readiness before any case runs.
       - name: Run full live eval
         id: eval-full
+        if: steps.provisioning.outputs.ready == 'true'
         shell: bash
         run: |
           set -o pipefail
+          # artifacts/ is gitignored, so a fresh checkout does not have it and
+          # the `tee` below (and the CLI's own --out write) would fail on it.
+          mkdir -p artifacts
           bun run eval:full -- --mode live \
             --model "${FINAGENT_EVAL_MODEL:-anthropic/claude-sonnet-4-5}" \
             --judge-provider anthropic \
@@ -70,7 +102,22 @@ jobs:
       # diagnostics, and a failed step fails the job (real signal, no wrapper).
       - name: Summarize eval results
         if: always()
+        env:
+          PROVISIONING_READY: ${{ steps.provisioning.outputs.ready }}
+          PROVISIONING_MISSING: ${{ steps.provisioning.outputs.missing }}
         run: |
+          if [ "$PROVISIONING_READY" != 'true' ]; then
+            {
+              echo '## Nightly full eval'
+              echo ''
+              echo 'Run status: **skipped** — CI is not provisioned for a live suite.'
+              echo ''
+              echo "Missing: ${PROVISIONING_MISSING:-unknown}."
+              echo ''
+              echo 'Provision the `ANTHROPIC_API_KEY` repository secret and a LongBridge CLI on the runner PATH to enable the nightly. Once provisioned, a real failure still fails this job.'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           {
             echo '## Nightly full eval'
             echo ''
@@ -85,7 +132,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload eval artifact
-        if: always()
+        if: always() && steps.provisioning.outputs.ready == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: eval-full-live
