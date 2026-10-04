@@ -79,7 +79,7 @@ describe('EvaluationSettingsTab', () => {
           data: {
             settings: {
               tracingEnabled: false,
-              langsmithProject: 'folio-agent',
+              langsmithProject: 'alphadesk-agent',
               langsmithEndpoint: '',
               langfuseTracingEnabled: true,
               langfuseHost: 'https://cloud.langfuse.com',
@@ -126,7 +126,7 @@ describe('EvaluationSettingsTab', () => {
           data: {
             settings: {
               tracingEnabled: false,
-              langsmithProject: 'folio-agent',
+              langsmithProject: 'alphadesk-agent',
               langsmithEndpoint: '',
               langfuseTracingEnabled: false,
               langfuseHost: '',

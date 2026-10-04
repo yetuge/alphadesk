@@ -9,7 +9,7 @@ import type {
   EvaluationCategory,
   EvaluationDifficulty,
 } from '@finagent/core';
-import { folioAgentV1Dataset } from './folio-agent-v1.ts';
+import { alphaDeskAgentV1Dataset } from './alphadesk-agent-v1.ts';
 import { embeddedDatasets } from './index.ts';
 
 /** The twenty capability ids of the Capability Registry (spec §20). */
@@ -77,8 +77,8 @@ function capabilitySets(
   };
 }
 
-describe('folio-agent-v1 dataset', () => {
-  const { cases } = folioAgentV1Dataset;
+describe('alphadesk-agent-v1 dataset', () => {
+  const { cases } = alphaDeskAgentV1Dataset;
 
   it('ships between 50 and 100 hand-authored cases', () => {
     expect(cases.length).toBeGreaterThanOrEqual(50);
@@ -141,10 +141,10 @@ describe('folio-agent-v1 dataset', () => {
     }
   });
 
-  it('registers as the embedded folio-agent-v1 dataset', () => {
-    const embedded = embeddedDatasets.find((entry) => entry.id === 'folio-agent-v1');
+  it('registers as the embedded alphadesk-agent-v1 dataset', () => {
+    const embedded = embeddedDatasets.find((entry) => entry.id === 'alphadesk-agent-v1');
     expect(embedded).toBeDefined();
-    expect(embedded?.version).toBe(folioAgentV1Dataset.version);
-    expect(embedded?.load()).toBe(folioAgentV1Dataset);
+    expect(embedded?.version).toBe(alphaDeskAgentV1Dataset.version);
+    expect(embedded?.load()).toBe(alphaDeskAgentV1Dataset);
   });
 });

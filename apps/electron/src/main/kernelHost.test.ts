@@ -276,7 +276,7 @@ mock.module('@finagent/shared', () => ({
   EvaluationStore: class {
     getSettingsSync = () => ({
       tracingEnabled: false,
-      langsmithProject: 'folio-agent',
+      langsmithProject: 'alphadesk-agent',
       langsmithEndpoint: '',
       langfuseTracingEnabled: false,
       langfuseHost: '',

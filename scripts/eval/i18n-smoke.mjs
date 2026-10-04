@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
 // i18n smoke run (spec §94).
 //
-// Runs the tiny zh-CN subset (folio-agent-v1-zh) in deterministic fixture
+// Runs the tiny zh-CN subset (alphadesk-agent-v1-zh) in deterministic fixture
 // mode, so the Eval Runner exercises the bilingual path (case locale 'zh-CN'
 // → runtime language instruction, spec §37–38) without LLM credentials,
 // network, or touching the en baseline.
 //
 //   bun scripts/eval/i18n-smoke.mjs
 //
-// Re-uses the existing run.ts CLI (`--smoke --dataset folio-agent-v1-zh
+// Re-uses the existing run.ts CLI (`--smoke --dataset alphadesk-agent-v1-zh
 // --mode fixture`) with a throwaway store dir. Exits 0 on success, nonzero on
 // infra error — same contract as eval:smoke. The committed en baseline
 // (scripts/eval/ci-baselines) is fully untouched.
@@ -23,7 +23,7 @@ const workdir = await mkdtemp(join(tmpdir(), 'folio-i18n-smoke-'));
 
 try {
   const proc = Bun.spawn(
-    ['bun', runScript, '--smoke', '--dataset', 'folio-agent-v1-zh', '--mode', 'fixture', '--store', workdir],
+    ['bun', runScript, '--smoke', '--dataset', 'alphadesk-agent-v1-zh', '--mode', 'fixture', '--store', workdir],
     { stdout: 'inherit', stderr: 'inherit', cwd: resolve(here, '..', '..') }
   );
   const code = await proc.exited;

@@ -110,7 +110,7 @@ describe('backend failure isolation (spec §87, §89)', () => {
   it('LangSmith offline/401 degrades to a status error, never a throw', async () => {
     const backend = new LangSmithEvaluationBackend({
       apiKey: 'lsv2_pt_badkey',
-      project: 'folio-agent',
+      project: 'alphadesk-agent',
       fetchImpl: async () => {
         throw new Error('network unreachable');
       },
@@ -125,7 +125,7 @@ describe('backend failure isolation (spec §87, §89)', () => {
   it('bad credential returns 401 as a status error', async () => {
     const backend = new LangSmithEvaluationBackend({
       apiKey: 'lsv2_pt_invalid',
-      project: 'folio-agent',
+      project: 'alphadesk-agent',
       fetchImpl: async (url, init) =>
         new Response(JSON.stringify({ error: 'Unauthorized' }), {
           status: 401,
@@ -141,7 +141,7 @@ describe('backend failure isolation (spec §87, §89)', () => {
     await withStore(async (store) => {
       const backend = new LangSmithEvaluationBackend({
         apiKey: 'lsv2_pt_x',
-        project: 'folio-agent',
+        project: 'alphadesk-agent',
         fetchImpl: async () => new Response(JSON.stringify({ runs: [] }), { status: 200 }),
       });
       const correlation = new TraceCorrelationService({ backend, store });
