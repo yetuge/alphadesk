@@ -41,7 +41,9 @@ jobs:
       # metric regression past threshold) or run error, so a non-zero exit
       # here fails the job/PR.
       - name: Run fixture eval smoke gate
-        run: bun run eval:smoke -- --mode fixture --baseline alphadesk-agent-v1 --out artifacts/eval-smoke.json
+        run: |
+          mkdir -p artifacts
+          bun run eval:smoke -- --mode fixture --baseline alphadesk-agent-v1 --out artifacts/eval-smoke.json
 
       - name: Upload eval smoke artifact
         uses: actions/upload-artifact@v4
